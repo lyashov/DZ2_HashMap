@@ -21,7 +21,7 @@ public class Main {
         System.out.println(myHashTable.get(99));
 
         //Delete by key
-        myHashTable.delete(99);
+        myHashTable.remove(99);
         System.out.println("Deleted value (key = 99) " + myHashTable.get(99));
 
         myHashTable.put(8,"My updated value (key = 8)");

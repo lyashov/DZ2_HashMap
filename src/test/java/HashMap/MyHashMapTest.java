@@ -6,40 +6,51 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class MyHashMapTest {
-    MyHashMap map = new MyHashMap();
+    MyHashMap map;
     @Test
     public void put() {
-        Integer key = 10;
-        String value = "test1";
-        Object result = map.put(key, value);
-        assertEquals((String)result, value);
+        map = new MyHashMap();
+        for (int i = 1; i<=100; i++)
+            map.put(i, "value" + i);
+
+        for (int i = 1; i<=map.size()-1; i++) {
+            Object result = map.get(i);
+            System.out.println((String)result);
+            assertEquals("value" + i, (String) result);
+        }
     }
 
     @Test
     public void delete() {
-        String key = "keyTest";
-        map.put(key, "valueTest");
-        boolean result = map.delete(key);
-        assertEquals(result, true);
+        for (int i = 1; i<=100; i++)
+            map.put(i, "value" + i);
+        for (int i = 1; i<=99; i++)
+            map.remove(i, "value" + i);
+        System.out.println("Map size" + map.size());
+        assertEquals(map.size(), 0);
     }
 
     @Test
     public void get() {
-        String key = "keyTest";
-        Integer value = 33;
-        map.put(key, value);
-        Object result = map.get(key);
-        assertEquals((Integer)result, value);
+        map = new MyHashMap();
+        for (int i = 1; i<=100; i++)
+            map.put(i, "value" + i);
+
+        for (int i = 1; i<=map.size()-1; i++) {
+            Object result = map.get(i);
+            System.out.println((String)result);
+            assertEquals("value" + i, (String) result);
+        }
     }
 
-    @Test
-    public void containsKey() {
-        Boolean result = map.containsKey("not this key");
-        assertNotEquals(true, result);
-    }
+
 
     @Test
     public void size() {
+        map = new MyHashMap();
+        for (int i = 1; i<=100; i++)
+            map.put(i, "value" + i);
+
         int size = map.size();
         assertNotEquals(-1, size);
     }

@@ -7,6 +7,18 @@ public class Main {
     public static void main(String[] args) {
         MyHashMap<Integer, String> myHashTable = new MyHashMap<Integer, String>();
 
+        myHashTable = new MyHashMap();
+        int rangeTest = 10;
+
+        for (int i = 0; i < rangeTest; i++) {
+            myHashTable.put(i, "value" + i);
+        }
+
+        for (int i = 0; i < myHashTable.size() ; i++) {
+            Object myResult = myHashTable.get(i);
+            System.out.println(myResult);
+        }
+
         //Put pairs elements
         myHashTable.put(3,"My first value");
         myHashTable.put(8,"My second value");

@@ -2,7 +2,7 @@ package HashMap;
 
 import java.util.*;
 
-public class MyHashMap<T1, T2> implements Map<T1, T2> {
+public class MyHashMap<T1, T2> implements HashMap<T1, T2> {
     private float loadFactor = 0.75f;
     private static int arrayMaxSize = 16;
     private int size = 0;
@@ -157,48 +157,5 @@ public class MyHashMap<T1, T2> implements Map<T1, T2> {
         return this.size;
     }
 
-    @Override
-    public Set<Entry<T1, T2>> entrySet() {
-        HashMap<T1, T2> hashMap = new HashMap<>();
-        hashMap = fillHashMap();
-        return hashMap.entrySet();
-    }
 
-    @Override
-    public boolean containsValue(Object value) {
-        return false;
-    }
-
-    @Override
-    public void putAll(Map<? extends T1, ? extends T2> m) {
-
-    }
-
-    @Override
-    public void clear() {
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = null;
-        }
-    }
-
-    private HashMap fillHashMap(){
-        HashMap<T1, T2> hashMap = new HashMap<>();
-        for (int i = 0; i < arr.length; i++) {
-            hashMap.put(arr[i].getKey(), arr[i].getValue());
-        };
-        return hashMap;
-    }
-    @Override
-    public Set<T1> keySet() {
-        HashMap<T1, T2> hashMap = new HashMap<>();
-        hashMap = fillHashMap();
-        return hashMap.keySet();
-    }
-
-    @Override
-    public Collection<T2> values() {
-        HashMap<T1, T2> hashMap = new HashMap<>();
-        hashMap = fillHashMap();
-        return hashMap.values();
-    }
 }

@@ -7,50 +7,27 @@ public class MyHashMap<T1, T2> implements HashMap<T1, T2> {
     private static int arrayMaxSize = 16;
     private int size = 0;
 
-    public MyHashMap() {
-
-    }
-
-    public MyHashMap(int arraySize) {
-        this.arrayMaxSize = arraySize;
-    }
-
-    public MyHashMap(int loadFactor, int arraySize) {
-        this.loadFactor = loadFactor;
-        this.arrayMaxSize = arraySize;
-    }
-
-    static class Pair<T1, T2> {
+    private static class Pair<T1, T2> {
         private final T1 key;
         private final T2 value;
         private int hashCode;
-        private int sizeForHash;
         Pair<T1, T2> next;
 
-        public Pair(T1 key, T2 value, int sizeForHash) {
+        private Pair(T1 key, T2 value, int sizeForHash) {
             this.key = key;
             this.value = value;
-            this.hashCode = keyHashCode(key.hashCode());
-            this.sizeForHash = sizeForHash;
+            this.hashCode = keyHashCode(key.hashCode(), sizeForHash);
         }
 
-        public void setSizeForHash(int sizeForHash) {
-            this.sizeForHash = sizeForHash;
-        }
-
-        public int keyHashCode(int hashCode) {
-            return Math.abs(hashCode) % (this.sizeForHash - 1);
-        }
-
-        public static int keyHashCode(int hashCode, int sizeForHash) {
+        private static int keyHashCode(int hashCode, int sizeForHash) {
             return Math.abs(hashCode) % (sizeForHash - 1);
         }
 
-        public T1 getKey() {
+        private T1 getKey() {
             return key;
         }
 
-        public T2 getValue() {
+        private T2 getValue() {
             return value;
         }
     }
@@ -67,7 +44,7 @@ public class MyHashMap<T1, T2> implements HashMap<T1, T2> {
             if (persent >= loadFactor) resize(arr.length * 2);
         }
         Pair<T1, T2> pair = new Pair(key, value, arr.length);
-        int index = pair.keyHashCode(key.hashCode());
+        int index = pair.keyHashCode(key.hashCode(), arr.length);
         if (arr[index] == null){
             arr[index] = pair;
             if (!isResize) this.size++;
@@ -101,7 +78,25 @@ public class MyHashMap<T1, T2> implements HashMap<T1, T2> {
     }
 
     public boolean containsKey(Object key) {
-         return get(key) != null ? true : false;
+        return get(key) != null ? true : false;
+    }
+
+    public boolean containsValue(Object value) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == null) continue;
+            if (value.equals(arr[i].getValue())){
+                return true;
+            }
+            Pair<T1, T2> pair = arr[i];
+            Pair<T1, T2> child;
+            while ((child = getChild(pair)) != null) {
+                if (value.equals(child.getValue())){
+                    return true;
+                }
+                pair = child;
+            }
+        }
+        return false;
     }
 
     private Pair<T1, T2> getChild(Pair<T1, T2> pair) {

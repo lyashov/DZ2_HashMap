@@ -35,6 +35,7 @@ public class MyHashMap<T1, T2> implements HashMap<T1, T2> {
     private Pair<T1, T2>[] arr = new Pair[arrayMaxSize];
 
     public T2 put(T1 key, T2 value) {
+        if (key == null) throw new NullPointerException();
         return putKeyValue(key, value, false);
     }
 
